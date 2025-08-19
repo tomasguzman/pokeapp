@@ -3,33 +3,42 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+
+  const [currentView, setCurrentView] = useState('landing');
+  const [selectedPokemonId, setSelectedPokemonId] = useState(null);
+
+
+  const navigateTo = (view) => {
+    setCurrentView(view);
+  };
+
+  const handlePokemonSelect = (id) => {
+    setSelectedPokemonId(id);
+    navigateTo('pokedex');
+  };
+
+  const renderView = () => {
+    switch (currentView) {
+      case 'landing':
+        return <LandingPage onStartClick={() => navigateTo('pokegrid')} />;
+      case 'pokegrid':
+        return <PokeGrid onPokemonSelect={handlePokemonSelect} />;
+      case 'pokedex':
+        return <Pokedex pokemonId={selectedPokemonId} onBackClick={() => navigateTo('pokegrid')} />;
+      default:
+        return <LandingPage onStartClick={() => navigateTo('pokegrid')} />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 font-sans">
+      <div className="w-full max-w-6xl bg-gray-200 p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-6">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-6">PokeApp</h1>
+        {renderView()}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default App
