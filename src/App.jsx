@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import LandingPage from './components/LandingPage/LandingPage';
 import PokeGrid from './components/PokeGrid/PokeGrid';
-
+import Pokedex from './components/Pokedex/Pokedex';
 const App = () => {
 
   const [currentView, setCurrentView] = useState('landing');
