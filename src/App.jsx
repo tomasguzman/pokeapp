@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import LandingPage from './components/LandingPage/LandingPage';
+import PokeGrid from './components/PokeGrid/PokeGrid';
 
 const App = () => {
 
