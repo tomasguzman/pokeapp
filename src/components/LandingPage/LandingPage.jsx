@@ -15,35 +15,7 @@ const LandingPage = ({ onStartClick }) => {
       >
         START
       </button>
-      <style jsx>{`
-        /* Keyframes for a simple fade-in effect */
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
 
-        /* A subtle pulsing animation for the button on load */
-        @keyframes pulseOnce {
-          0%, 100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.05);
-          }
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        .animate-pulse-once {
-          animation: pulseOnce 1.5s ease-in-out;
-        }
-
-        .animation-delay-300 {
-          animation-delay: 0.3s;
-        }
-      `}</style>
     </div>
   );
 };
