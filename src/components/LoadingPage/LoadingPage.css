@@ -1,0 +1,33 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #313131;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.open-pokeball-image {
+  width: 50vmin; 
+  height: auto;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading-text {
+  position: absolute;
+  margin-top: 2rem;
+  font-size: clamp(1rem, 5vw, 2rem);
+  color: #333;
+  text-align: center;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}

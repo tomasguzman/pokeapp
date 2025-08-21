@@ -1,21 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import './LandingPage.css';
+import closedPokeball from '../../assets/ClosePokeball.png';
+import openPokeball from '../../assets/openPokeball.png';
+
 
 const LandingPage = ({ onStartClick }) => {
-  return (
-    <div className="flex flex-col items-center justify-center h-full text-center py-20">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-700 mb-6">
-        ¡Bienvenido a la PokeApp!
-      </h2>
-      <p className="text-md sm:text-lg text-gray-600 mb-12">
-        Descubre información sobre todos tus Pokémon favoritos.
-      </p>
-      <button
-        onClick={onStartClick}
-        className="px-8 py-4 bg-red-500 text-white font-bold rounded-full shadow-lg hover:bg-red-600 transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-offset-2"
-      >
-        START
-      </button>
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPokeballOpen, setIsPokeballOpen] = useState(false);
 
+  const handleStartClick = () => {
+    setIsTransitioning(true);
+    setIsPokeballOpen(true);
+    
+    setTimeout(() => {
+        onStartClick();
+    }, 500);
+  };
+
+  const pokeballImage = isPokeballOpen ? openPokeball : closedPokeball;
+
+  return (
+    <div className="landing-container">
+      <h1 className="landing-title">POKEAPP</h1>
+      <div className={`transition-overlay ${isTransitioning ? 'active' : ''}`}></div>
+      <div className="pokeball-container">
+        <img 
+          src={pokeballImage} 
+          alt="Pokeball" 
+          className="pokeball-image"
+          onClick={handleStartClick}
+        />
+        <button
+          onClick={handleStartClick}
+          className="start-button"
+        >
+          START
+        </button>
+      </div>
     </div>
   );
 };

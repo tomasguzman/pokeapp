@@ -2,12 +2,23 @@ import { useState } from 'react'
 import LandingPage from './components/LandingPage/LandingPage';
 import PokeGrid from './components/PokeGrid/PokeGrid';
 import Pokedex from './components/Pokedex/Pokedex';
+import './App.css';
+
 const App = () => {
 
   const [currentView, setCurrentView] = useState('landing');
   const [selectedPokemonId, setSelectedPokemonId] = useState(null);
+  const [favorites, setFavorites] = useState(new Set());
 
-
+  const handleFavoriteToggle = (id) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(id)) {
+      newFavorites.delete(id);
+    } else {
+      newFavorites.add(id);
+    }
+    setFavorites(newFavorites);
+  };
   const navigateTo = (view) => {
     setCurrentView(view);
   };
@@ -20,22 +31,28 @@ const App = () => {
   const renderView = () => {
     switch (currentView) {
       case 'landing':
-        return <LandingPage onStartClick={() => navigateTo('pokegrid')} />;
-      case 'pokegrid':
-        return <PokeGrid onPokemonSelect={handlePokemonSelect} />;
+        return <LandingPage onStartClick={() => setCurrentView('pokedex')} />;
       case 'pokedex':
-        return <Pokedex pokemonId={selectedPokemonId} onBackClick={() => navigateTo('pokegrid')} />;
+        return (
+          <PokeGrid
+            onPokemonSelect={id => {
+              setSelectedPokemonId(id);
+              setCurrentView('pokemon-details');
+            }}
+            favorites={favorites}
+            onFavoriteToggle={handleFavoriteToggle}
+          />
+        );
+      case 'pokemon-details':
+        return <Pokedex pokemonId={selectedPokemonId} onBackClick={() => setCurrentView('pokedex')} />;
       default:
-        return <LandingPage onStartClick={() => navigateTo('pokegrid')} />;
+        return <LandingPage onStartClick={() => setCurrentView('pokedex')} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4 font-sans">
-      <div className="w-full max-w-6xl bg-gray-200 p-8 rounded-2xl shadow-xl flex flex-col items-center space-y-6">
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-6">PokeApp</h1>
-        {renderView()}
-      </div>
+    <div className="app-container">
+      {renderView()}
     </div>
   );
 };
